@@ -1,0 +1,317 @@
+{% load static %}
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang=""> <!--<![endif]-->
+<head>
+    {% if user_name is None %}
+        <script language="JavaScript">
+            alert("您还未登陆！请先登录！");
+            window.location.href = '/';
+        </script>
+    {% endif %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>学生主页</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="{% static 'myApp/TeacherIndex/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'myApp/TeacherIndex/css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" href="{% static 'myApp/TeacherIndex/css/templatemo-style.css' %}">
+
+    <script src="{% static 'myApp/TeacherIndex/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js' %}"></script>
+</head>
+<body>
+<!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+<nav class="nav">
+    <div class="burger">
+        <div class="burger__patty"></div>
+    </div>
+
+    <ul class="nav__list">
+        <li class="nav__item">
+            <a href="#1" class="nav__link c-blue"><img src="{% static 'myApp/TeacherIndex/img/home-icon.png' %}" alt=""></a>
+        </li>
+        <li class="nav__item">
+            <a href="#2" class="nav__link c-red"><img src="{% static 'myApp/TeacherIndex/img/projects-icon.png' %}"
+                                                      alt=""></a>
+        </li>
+        <li class="nav__item">
+            <a href="#3" class="nav__link c-yellow scrolly"><img
+                    src="{% static 'myApp/TeacherIndex/img/about-icon.png' %}" alt=""></a>
+        </li>
+        <li class="nav__item">
+            <a href="#4" class="nav__link c-green"><img src="{% static 'myApp/TeacherIndex/img/contact-icon.png' %}"
+                                                        alt=""></a>
+        </li>
+    </ul>
+</nav>
+
+<section class="panel b-blue" id="1">
+    <article class="panel__wrapper">
+        <div class="panel__content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="home-content">
+                            <div class="home-heading">
+                                <h1>
+                                    <em>学生主页</em>
+                                    <br/><br/>
+                                    {% if user_name is None %}
+                                        您好，游客！<a href="/" target="_self">点此登陆</a>
+                                    {% else %}
+                                        {{ user_name }}同学，你好！<a href="{% url 'myApp:OutLogin' %}" target="_self">注销</a>
+                                    {% endif %}
+                                </h1>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="home-box-content">
+                                        <div class="left-text">
+                                            <h4>上传 <em>个人照片</em> ！</h4>
+                                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ user_name }}同学，如果你是第一次登陆本系统，或者你想为了让自己在进行人脸签到的过程中加大自己的成功率，那么请
+                                                <a href="{% url 'myApp:StudentUploadPhoto' %}">上传照片</a>. 剩下的事情就交给人工智能吧！
+                                            </p>
+                                            <div class="primary-button">
+                                                <a href="{% url 'myApp:StudentUploadPhoto' %}">上传照片</a>
+                                            </div>
+                                        </div>
+                                        <div class="right-image">
+                                            <img src="{% static 'myApp/TeacherIndex/img/right-home-image.png' %}"
+                                                 alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+<section class="panel b-red" id="2">
+    <article class="panel__wrapper">
+        <div class="panel__content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="projects-content">
+                            <div class="heading">
+                                <h4>Student can do</h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="owl-carousel owl-theme projects-container">
+                                        <div>
+                                            <div class="project-item">
+                                                <a href="{% static 'myApp/TeacherIndex' %}" data-lightbox="image-1"><img
+                                                        src="{% static 'myApp/TeacherIndex/img/project-item-01.jpg' %}"
+                                                        alt=""></a>
+                                                <div class="text-content">
+                                                    <h4>上传照片</h4>
+                                                    <p>丰富个人的照片库，这不仅仅是为了在进行我们的人脸识别签到时候的方便，也是为了你自己 :)</p>
+                                                    <div class="primary-button">
+                                                        <a href="{% url 'myApp:StudentUploadPhoto' %}">上传照片！</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--
+                            <div>
+                              <div class="project-item">
+                                <a href="{% static 'myApp/TeacherIndex/img/project-item-02.jpg' %}" data-lightbox="image-1"><img src="{% static 'myApp/TeacherIndex/img/project-item-02.jpg' %}" alt=""></a>
+                                <div class="text-content">
+                                  <h4>查看记录</h4>
+                                  <p>忘记以前发起过的签到了? 没关系, 在这里, 您可以看到由您发起的所有签到记录.</p>
+                                  <div class="primary-button">
+                                    <a href="#">签到记录</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            -->
+                                        <div>
+                                            <div class="project-item">
+                                                <a href="{% static 'myApp/TeacherIndex/img/project-item-03.jpg' %}"
+                                                   data-lightbox="image-1"><img
+                                                        src="{% static 'myApp/TeacherIndex/img/project-item-03.jpg' %}"
+                                                        alt=""></a>
+                                                <div class="text-content">
+                                                    <h4>修改密码</h4>
+                                                    <p>也许你觉得现在的密码过于简单或者繁琐, 这里可以帮助你修改你的个人密码！</p>
+                                                    <div class="primary-button">
+                                                        <a href="/ReselectPassword/?identity=Student">修改密码</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--
+                            <div>
+                              <div class="project-item">
+                                <a href="{% static 'myApp/TeacherIndex/img/project-item-04.jpg' %}" data-lightbox="image-1"><img src="{% static 'myApp/TeacherIndex/img/project-item-04.jpg' %}" alt=""></a>
+                                <div class="text-content">
+                                  <h4>This Moment</h4>
+                                  <p>Lorem ipsum dolor sit amet, adipis scing elit etiam sit amet ante vehicula, aliquam mauris in, luctus neque.</p>
+                                  <div class="primary-button">
+                                    <a href="#">Discover More</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <div class="project-item">
+                                <a href="{% static 'myApp/TeacherIndex/img/project-item-05.jpg' %}" data-lightbox="image-1"><img src="{% static 'myApp/TeacherIndex/img/project-item-05.jpg' %}" alt=""></a>
+                                <div class="text-content">
+                                  <h4>Artwork</h4>
+                                  <p>Lorem ipsum dolor, adipis scing elit etiam ante vehicula, aliquam mauris in, luctus neque.</p>
+                                  <div class="primary-button">
+                                    <a href="#">Discover More</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <div class="project-item">
+                                <a href="{% static 'myApp/TeacherIndex/img/project-item-06.jpg' %}" data-lightbox="image-1"><img src="{% static 'myApp/TeacherIndex/img/project-item-06.jpg' %}" alt=""></a>
+                                <div class="text-content">
+                                  <h4>Item Sixth</h4>
+                                  <p>Lorem ipsum dolor, adipis scing elit etiam ante vehicula, aliquam mauris in, luctus neque.</p>
+                                  <div class="primary-button">
+                                    <a href="#">Discover More</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <div class="project-item">
+                                <a href="{% static 'myApp/TeacherIndex/img/project-item-07.jpg' %}" data-lightbox="image-1"><img src="{% static 'myApp/TeacherIndex/img/project-item-07.jpg' %}" alt=""></a>
+                                <div class="text-content">
+                                  <h4>Last Item</h4>
+                                  <p>Lorem ipsum dolor, adipis scing elit etiam ante vehicula, aliquam mauris in, luctus neque.</p>
+                                  <div class="primary-button">
+                                    <a href="#">Discover More</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+<section class="panel b-yellow" id="3">
+    <article class="panel__wrapper">
+        <div class="panel__content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="about-content">
+                            <div class="heading">
+                                <h4>关于我们</h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="about-box-content">
+                                        <img src="{% static 'myApp/TeacherIndex/img/about-image.png' %}" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-md-7 col-md-offset-5">
+                                    <div class="about-box-text">
+                                        <h4>西安科技大学-玩不了了！</h4>
+                                        <p>我们团队的五人均来自“西安科技大学-校创新学院软件实验室”，由队长——王钦弘同学的带领下，完成我们的第一个项目。<br/><a>我们可能做不好，但我们一定好好做。</a>
+                                        </p>
+                                        <div class="primary-button">
+                                            <a href="{% url 'myApp:todo' %}">联系我们！</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+<section class="panel b-green" id="4">
+    <article class="panel__wrapper">
+        <div class="panel__content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="contact-content">
+                            <div class="heading">
+                                <h4>Contact us</h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="contat-form">
+                                        <form id="contact" action="" method="post">
+                                            <fieldset>
+                                                <input name="name" type="text" class="form-control" id="name"
+                                                       placeholder="Your Name" required="">
+                                            </fieldset>
+                                            <fieldset>
+                                                <input name="email" type="email" class="form-control" id="email"
+                                                       placeholder="Email" required="">
+                                            </fieldset>
+                                            <fieldset>
+                                                <textarea name="message" rows="6" class="form-control" id="message"
+                                                          placeholder="Message" required=""></textarea>
+                                            </fieldset>
+                                            <fieldset>
+                                                <button type="submit" id="form-submit" class="btn">Send Message</button>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="more-info">
+                                        <p> 队员们详细联系方式：<br/>
+                                            王钦弘：879969355@qq.com<br/>
+                                            刘尹强：739955726@qq.com<br/>
+                                            罗心怡：1124411715@qq.com<br/>
+                                            冯 &nbsp; &nbsp;娜：3244345132@qq.com<br/>
+                                            刘 &nbsp; &nbsp;鑫：ginshio78@gmail.com<br>
+                                        <hr>
+                                        <a>我们可能做不好，但我们一定好好做。</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="footer">
+                            <p>西安科技大学 &copy; 玩不了了！</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+
+
+<script src="{% static 'myApp/TeacherIndex/js/vendor/jquery-1.11.2.min.js' %}"></script>
+<script>window.jQuery || document.write('<script src="{% static 'myApp/TeacherIndex/js/vendor/jquery-1.11.2.min.js' %}"><\/script>')</script>
+
+<script src="{% static 'myApp/TeacherIndex/js/vendor/bootstrap.min.js' %}"></script>
+
+<script src="{% static 'myApp/TeacherIndex/js/plugins.js' %}"></script>
+<script src="{% static 'myApp/TeacherIndex/js/main.js' %}"></script>
+</body>
+</html>

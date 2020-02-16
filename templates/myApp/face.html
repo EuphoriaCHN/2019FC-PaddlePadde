@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>face recognation</title>
+    <link href="{% static "/myApp/face/css/bootstrap.min.css" %}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static "/myApp/face/bower_components/flexslider/flexslider.css" %}" rel="stylesheet">
+    <link href="{% static "/myApp/face/css/scrolling-nav.css" %}" rel="stylesheet">
+    <link href="{% static "/myApp/face/css/style.css" %}" rel="stylesheet">
+    <link href="{% static "/myApp/face/css/responsive.css" %}" rel="stylesheet">
+    <link href="{% static "/myApp/face/css/font-awesome.min.css" %}" rel="stylesheet">
+    <link href="{% static "/myApp/face/css/headline.css" %}" rel="stylesheet">
+    <link href="{% static "/myApp/face/ionicons/css/ionicons.min.css" %}" rel="stylesheet">
+    <!-- Important Owl stylesheet -->
+    <link rel="stylesheet" href="{% static "/myApp/face/bower_components/owl-carousel/owl.carousel.css" %}">
+
+    <!-- Default Theme -->
+    <link rel="stylesheet" href="{% static "/myApp/face/bower_components/owl-carousel/owl.theme.css" %}">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .face-container {
+            width: 70%;
+            margin: auto;
+            padding-top: 133px;
+            height: 700px;
+        }
+
+        .viedos {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px;
+        }
+
+        .btns {
+            margin: 10px;
+            text-align: center;
+        }
+
+        .black-control {
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+<!--导航栏-->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <!--top bar start-->
+    <div class="top-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <ul class="list-inline">
+                        <li><a><i class="ion-android-people"></i> &nbsp;签到发起者：{{ teacher_name }}老师 </a></li>
+                        <!--<li><a href="#"><i class="ion-ios-email"></i> 879969355@qq.com</a></li>-->
+                    </ul>
+                </div><!--top left col end-->
+                <!--top social col end-->
+            </div><!--row-->
+        </div><!--container-->
+    </div>
+    <!--top bar end-->
+    <div class="container">
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <p class="navbar-brand page-scroll logo no-margin">人脸签到班级：{{ sign_college }}学院 - {{ sign_major }}
+                - {{ sign_grade }}</p>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                <li>
+                    <a class="page-scroll">应到：{{ reached }}&nbsp;&nbsp;&nbsp;实到：{{ actual }}</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="/recognition/">关闭签到</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="{% url 'myApp:todo' %}">联系我们</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--内容主体-->
+<div class="face-container">
+    <div class="black-control"></div>
+    ------------------------
+    <div class="">请您直视摄像头并点击“拍照”</div>
+    <!--拍照区-->
+    <div class="viedos">
+        <video id="video" width="400" height="300" autoplay></video>
+        <canvas id="canvas" class="canvas" width="400" height="300"></canvas>
+    </div>
+    <!--button-->
+    <div class="btns">
+        <button id="snap" class="btn btn-lg btn-white-border">拍照</button>
+        <button id="uploadbtn" class="btn btn-lg btn-white-border">上传</button>
+    </div>
+    ------------------------
+    <div class="">拍照有问题？ 尝试刷新或返回重试</div>
+</div>
+<div class="footer-bottom" style="height: 125px">
+    <div class="container">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="f-b">Copyright &copy; 西安科技大学-玩不了了<a target="_blank" title="玩不了了">玩不了了</a> <br/> -
+                Collect from <a title="玩不了了" target="_blank">玩不了了</a></div>
+        </div>
+    </div>
+</div>
+{% if teacher_name is None %}
+    <script language="JavaScript">
+        alert("您还未登陆！请先登录！");
+        window.location.href = '/';
+    </script>
+{% endif %}
+<!-- jQuery -->
+<!-- jQuery plugins-->
+<script src="{% static "/myApp/face/bower_components/jquery/dist/jquery.min.js" %}"></script>
+<script src="{% static "/myApp/face/bower_components/flexslider/jquery.flexslider-min.js" %}"></script>
+<script src="{% static "/myApp/face/bower_components/scrollreveal/dist/scrollreveal.min.js" %}"></script>
+<script src="{% static "/myApp/face/js/modernizr.js" %}"></script>
+<script src="{% static "/myApp/face/js/custom.js" %}" type="text/javascript"></script>
+<script src="{% static "/myApp/face/js/bootstrap.min.js" %}"></script>
+<!-- Scrolling Nav JavaScript -->
+<script src="{% static "/myApp/face/js/jquery.easing.min.js" %}"></script>
+<script src="{% static "/myApp/face/js/scrolling-nav.js" %}"></script>
+<script src="{% static "/myApp/face/js/main.js" %}"></script>
+<script src="{% static "/myApp/face/bower_components/owl-carousel/owl.carousel.js" %}"></script>
+<script type="text/javascript">
+    var video = document.getElementById("video");
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext('2d');
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    navigator.getUserMedia({video: true, audio: false}, gotStream, noStream);
+
+    function gotStream(stream) {
+
+        // 这是个试验中的API可能存在兼容性的问题,所以我用别的替代掉了
+        // video.src = URL.createObjectURL(stream);
+        video.srcObject = stream;
+
+        video.onerror = function () {
+            stream.stop();
+        };
+        stream.onended = noStream;
+    }
+
+    //
+    function noStream(error) {
+        alert("无法打开摄像头！请重试！");
+        window.location.href = '/face/'
+    }
+
+    var dataURL;
+    document.getElementById("snap").addEventListener("click", function () {
+        context.drawImage(video, 0, 0, 400, 300);
+    });
+
+    document.getElementById("uploadbtn").addEventListener("click", function () {
+        dataURL = canvas.toDataURL("image/jpeg");
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('post', '/face/', true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        var data = {
+            'imageData': dataURL
+        };
+        data = JSON.stringify(data);
+        xhr.send(data);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    // alert(xhr.responseText);
+                    // if(xhr.responseText == '666'){
+                    alert(xhr.responseText);
+                    window.location.href = '/face/'
+                    // window.location.href = 'recognition/'
+                    // }
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>
